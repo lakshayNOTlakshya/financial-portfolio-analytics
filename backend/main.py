@@ -1,14 +1,14 @@
 from fastapi import FastAPI
+from backend.database import engine, Base
+import backend.models  # noqa: F401
 
 app = FastAPI(
     title="Financial Portfolio Analytics Platform",
-    description="API backend for portfolio returns, risk, and stress testing",
     version="0.1.0"
 )
 
+Base.metadata.create_all(bind=engine)
+
 @app.get("/health")
 def health_check():
-    return {
-        "status": "ok",
-        "service": "portfolio-analytics-api"
-    }
+    return {"status": "ok"}
